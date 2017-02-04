@@ -1,5 +1,3 @@
-require 'faraday'
-
 module Gemsy
   class Uploader
     def initialize
