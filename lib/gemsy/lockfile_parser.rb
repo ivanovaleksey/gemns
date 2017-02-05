@@ -5,12 +5,14 @@ module Gemsy
     include Sidekiq::Worker
     sidekiq_options retry: false
 
-    def perform(file_path)
+    def perform(lockfile_id)
       $logger.debug 'Inside worker'
-      $logger.debug "File exists? #{File.exists?(file_path)}"
+      $logger.debug lockfile_id
 
-      content = File.read(file_path)
-      parser  = Bundler::LockfileParser.new(content)
+      lockfile = Lockfile.find(lockfile_id)
+      $logger.debug lockfile.inspect
+
+      parser  = Bundler::LockfileParser.new(lockfile.raw_content)
       $logger.debug parser.specs.map(&:name)
     end
   end

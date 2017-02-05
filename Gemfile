@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 ruby File.read('.ruby-version').strip
 
 gem 'faraday'
+gem 'mongoid'
 gem 'rake'
 gem 'sidekiq'
 gem 'sinatra'
