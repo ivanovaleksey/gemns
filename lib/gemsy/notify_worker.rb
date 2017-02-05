@@ -20,9 +20,14 @@ module Gemsy
           text: 'Checkout latest gem updates',
           fields: [
             {
+              'title': 'Gemfile',
+              'value': lockfile,
+              'short': true
+            },
+            {
               'title': 'Gem',
               'value': rubygems_link,
-              'short': false
+              'short': true
             },
             {
               'title': 'Old version',
@@ -49,6 +54,10 @@ module Gemsy
 
     def rubygems_link
       format('<https://rubygems.org/gems/%{gem}|%{gem}>', gem: gem)
+    end
+
+    def lockfile
+      @args[:lockfile] || @args['lockfile']
     end
 
     def gem
