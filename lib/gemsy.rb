@@ -9,6 +9,7 @@ module Gemsy
   autoload :Listener,       'gemsy/listener'
   autoload :Lockfile,       'gemsy/lockfile'
   autoload :LockfileParser, 'gemsy/lockfile_parser'
+  autoload :LockfileSpec,   'gemsy/lockfile_spec'
   autoload :Uploader,       'gemsy/uploader'
 end
 
