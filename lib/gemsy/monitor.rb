@@ -18,7 +18,12 @@ module Gemsy
     private
 
     def notify_about(spec)
-      notify_args = { gem: gem, old_version: spec.version.to_s, new_version: new_version }
+      notify_args = {
+        lockfile: @lockfile.name,
+        gem: gem,
+        old_version: spec.version.to_s,
+        new_version: new_version
+      }
       NotifyWorker.perform_async(notify_args)
     end
 
