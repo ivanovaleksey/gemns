@@ -6,14 +6,13 @@ module Gemsy
     sidekiq_options retry: false
 
     def perform(lockfile_id)
-      $logger.debug 'Inside worker'
-      $logger.debug lockfile_id
-
       lockfile = Lockfile.find(lockfile_id)
-      $logger.debug lockfile.inspect
 
-      parser  = Bundler::LockfileParser.new(lockfile.raw_content)
-      $logger.debug parser.specs.map(&:name)
+      parser = Bundler::LockfileParser.new(lockfile.raw_content)
+      specs  = parser.specs.map do |spec|
+        LockfileSpec.new(gem: spec.name, version: spec.version.to_s)
+      end
+      lockfile.update(specs: specs)
     end
   end
 end
