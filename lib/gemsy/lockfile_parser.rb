@@ -1,5 +1,3 @@
-require 'sidekiq'
-
 module Gemsy
   class LockfileParser
     include Sidekiq::Worker
