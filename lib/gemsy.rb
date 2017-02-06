@@ -16,6 +16,7 @@ module Gemsy
   autoload :LockfileSpec,   'gemsy/lockfile_spec'
   autoload :Monitor,        'gemsy/monitor'
   autoload :MonitorWorker,  'gemsy/monitor_worker'
+  autoload :Notifier,       'gemsy/notifier'
   autoload :NotifyWorker,   'gemsy/notify_worker'
   autoload :Uploader,       'gemsy/uploader'
 end
