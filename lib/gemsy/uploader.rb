@@ -9,6 +9,7 @@ module Gemsy
         # f.request :url_encoded
         f.adapter :net_http
       end
+      @conn.basic_auth(ENV['GEMSY_USERNAME'], ENV['GEMSY_PASSWORD'])
     end
 
     def upload_gemlock
