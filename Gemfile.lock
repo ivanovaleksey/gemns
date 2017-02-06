@@ -24,6 +24,7 @@ GEM
       activemodel (~> 5.0)
       mongo (~> 2.3)
     multipart-post (2.0.0)
+    newrelic_rpm (3.18.0.329)
     rack (1.6.5)
     rack-protection (1.5.3)
       rack
@@ -51,6 +52,7 @@ DEPENDENCIES
   faraday
   gems
   mongoid
+  newrelic_rpm
   rake
   sidekiq
   sinatra

@@ -3,6 +3,10 @@ require 'json'
 
 module Gemsy
   class Listener < Sinatra::Base
+    configure :production do
+      require 'newrelic_rpm'
+    end
+
     get '/' do
       'Gemsy is ready!'
     end
