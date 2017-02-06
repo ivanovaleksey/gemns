@@ -6,6 +6,7 @@ ruby File.read('.ruby-version').strip
 gem 'faraday'
 gem 'gems'
 gem 'mongoid'
+gem 'newrelic_rpm'
 gem 'rake'
 gem 'sidekiq'
 gem 'sinatra'
