@@ -3,8 +3,6 @@ require 'json'
 
 module Gemsy
   class Listener < Sinatra::Base
-    class Unauthorized < StandardError; end
-
     get '/' do
       'Gemsy is ready!'
     end
@@ -17,7 +15,7 @@ module Gemsy
 
         authorize_web_hook(env, hash)
         MonitorWorker.perform_async(gem: hash['name'], version: hash['version'])
-      rescue Unauthorized
+      rescue UnauthorizedError
         $logger.info "Unauthorized: #{env['HTTP_AUTHORIZATION']}"
         error 401
       end
@@ -37,7 +35,7 @@ module Gemsy
 
     def authorize_web_hook(env, params)
       authorization = [params['name'], params['version'], ENV['RUBYGEMS_API_KEY']].join('')
-      raise Unauthorized if env['HTTP_AUTHORIZATION'] != Digest::SHA2.hexdigest(authorization)
+      raise UnauthorizedError if env['HTTP_AUTHORIZATION'] != Digest::SHA2.hexdigest(authorization)
     end
   end
 end
