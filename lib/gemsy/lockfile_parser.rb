@@ -1,16 +1,30 @@
 module Gemsy
   class LockfileParser
-    include Sidekiq::Worker
-    sidekiq_options retry: false
+    def initialize(lockfile)
+      @lockfile = lockfile
+    end
 
-    def perform(lockfile_id)
-      lockfile = Lockfile.find(lockfile_id)
+    def call
+      @lockfile.update(
+        bundler: bundler,
+        specs: specs
+      )
+    end
 
-      parser = Bundler::LockfileParser.new(lockfile.raw_content)
-      specs  = parser.specs.map do |spec|
-        LockfileSpec.new(gem: spec.name, version: spec.version.to_s)
+    private
+
+    def bundler
+      parser.bundler_version
+    end
+
+    def specs
+      parser.specs.map do |spec|
+        LockfileSpec.new(gem: spec.name, version: spec.version)
       end
-      lockfile.update(specs: specs)
+    end
+
+    def parser
+      @parser ||= Bundler::LockfileParser.new(@lockfile.raw_content)
     end
   end
 end
